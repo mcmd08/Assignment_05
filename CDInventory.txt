@@ -1,0 +1,14 @@
+1,Macarena,Los Del Rio
+2,Bad Romance,Lady Gaga
+3,Can't Touch This,MC Hammer
+2,Bad Romance,Lady Gaga
+
+
+3,Can't Touch This,MC Hammer
+4,Go The Distance,Michael Bolton
+3,Can't Touch This,MC Hammer
+4,Go The Distance,Michael Bolton
+5,Rolling In The Deep,Adele
+1,Macarena,Los Del Rio
+5,Rolling In The Deep,Adele
+8,Like A Virgin,Madonna
