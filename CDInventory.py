@@ -74,7 +74,7 @@ while True:
                     for row in cd['id']:
                        lstID.append(row) #store all IDs from lstTbl to a variable
                 
-                if keyID in (lstID): #check if ID provided by user exists in list of IDs
+                if lstID.count(keyID) > 0: #check if ID provided by user exists in list of IDs
                     ctr=0
                     while ctr < len(lstTbl): #iterate thru lstTbl elements and match against user input
                         var=(lstTbl[ctr]['id']) 
