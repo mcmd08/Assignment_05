@@ -97,16 +97,14 @@ while True:
         # Save the data to CDInventory.txt
         counter=0
         if (lstTbl): #check for null list
-            
+            objFile = open(strFileName, 'a') #open file
             for row in lstTbl: #iterate thru lstTbl
                 counter+=1
                 strRow = ''
                 for item in row.values(): #capture dictionary values
                     strRow += str(item) + ',' #store dictionary values to variable
                 strRow = strRow[:-1] + '\n'
-            
-            objFile = open(strFileName, 'a') #open file
-            objFile.write(strRow) #write stored dictionary values
+                objFile.write(strRow) #write stored dictionary values
             objFile.close() # close file
         else:
             print('Inventory is empty.')
