@@ -2,7 +2,16 @@
 # Title: CDInventory.py
 # Desc: Add, Delete, Load and Display CD Inventory (Assignment 05)
 # Change Log: (Who, When, What)
-# Maria Dacutanan, 2020-Aug-11, Created File
+# Maria Dacutanan, 2020-Aug-09, Drafted pseudo code for the load data from file option
+# Maria Dacutanan, 2020-Aug-09, Finalized code for loading data from file option
+# Maria Dacutanan, 2020-Aug-10, Updated code for storing data into dictionary
+# Maria Dacutanan, 2020-Aug-10, Updated code for displaying inventory - unpacking a dictionary
+# Maria Dacutanan, 2020-Aug-10, Added code for deleting inventory
+# Maria Dacutanan, 2020-Aug-10, Refined logic for deleting inventory so that duplicate ID values are also deleted
+# Maria Dacutanan, 2020-Aug-11, Updated code for saving inventory into file
+# Maria Dacutanan, 2020-Aug-12, Added check for file not existing
+# Maria Dacutanan, 2020-Aug-12, Removed Debug Statements
+# Maria Dacutanan, 2020-Aug-12, Updated comments
 #------------------------------------------#
 
 # Declare variables
@@ -27,16 +36,23 @@ while True:
         break
     if strChoice == 'l':
         # Loading existing data
-        objfile=open(strFileName, 'r') #open CDInventory.txt abd store in objfile
-        linectr=0
-        for row in (objfile): #iterate thru each each line entry of objfile
-            if row.strip(): #ignore blank lines
-                lstRow=row.strip().split(',') #remo leading and trailing spaces, and separate elements by comma
-                dictRow={'id':lstRow[0], 'song': lstRow[1], 'artist':lstRow[2]}
-                lstTbl.append(dictRow) #append dictionary entries to lstTbl
-                linectr+=1            #count number of lines loaded
-        objfile.close()
-        print (str(linectr) + ' line(s) loaded into memory.\n')
+        while True:
+            objfile='Error'
+            try:
+                objfile=open(strFileName, 'r') #open CDInventory.txt and store in objfile
+            except:
+                print('Problem loading ' + strFileName + '.\n') #if unable to load file, return error msg and break out of loop
+                break
+            linectr=0
+            for row in (objfile): #iterate thru each each line entry of objfile
+                if row.strip(): #ignore blank lines
+                    lstRow=row.strip().split(',') #remove leading and trailing spaces, and separate elements by comma
+                    dictRow={'id':lstRow[0], 'song': lstRow[1], 'artist':lstRow[2]}
+                    lstTbl.append(dictRow) #append dictionary entries to lstTbl
+                    linectr+=1            #count number of lines loaded
+            objfile.close()
+            print (str(linectr) + ' line(s) loaded into memory.\n')
+            break
     elif strChoice == 'a':
         # Add data to the inventory
         while True: #user is re-prompted for null ID
@@ -51,8 +67,8 @@ while True:
             strArtist = input('Enter the Artist\'s Name: ')
             if (strArtist):
                 break
-        dictRow = {'id':strID, 'song':strTitle, 'artist':strArtist}
-        lstTbl.append(dictRow)
+        dictRow = {'id':strID, 'song':strTitle, 'artist':strArtist} #store new data into dictionary variable
+        lstTbl.append(dictRow) #append to list lstTbl
         print ()
     elif strChoice == 'i':
         # 3. Display the current data to the user each time the user wants to display the data
@@ -77,10 +93,10 @@ while True:
                 if lstID.count(keyID) > 0: #check if ID provided by user exists in list of IDs
                     ctr=0
                     while ctr < len(lstTbl): #iterate thru lstTbl elements and match against user input
-                        var=(lstTbl[ctr]['id']) 
+                        var=(lstTbl[ctr]['id']) #store ID from lstTbl
                         
-                        if str(var)==keyID:
-                            del lstTbl[int(ctr)] #delete element from lstTbl if
+                        if str(var)==keyID: #compare value in var against user input
+                            del lstTbl[int(ctr)] #delete element from lstTbl if found
                             delctr+=1 #counts number of deleted elements from lstTbl
                             ctr+-1 #decrease counter since lstTbl has shifted after deletion
                         else:
